@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: pod-NIC-exporter # promtheus jobs name
+  namespace: monitoring
+  labels:
+    team: pod-NIC # your match label
+spec:
+  namespaceSelector:
+    any: true    
+  podMetricsEndpoints:
+  - interval: 5s
+    scrapeTimeout: 5s  
+    path: /metrics
+    targetPort: 2112
+    port: prometheus # pod port name
+  selector:
+    matchLabels:
+      k8s-app: pod-NIC # label for the collected pods
